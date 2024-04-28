@@ -427,7 +427,7 @@ check_installation_logs() {
     # 循环检查安装日志文件
     while true; do
         for log_file in "$log_dir"/silentInstall*.log; do
-            if grep -qE "成功|Successfully" "$log_file" >/dev/null 2>&1; then
+            if grep -qE "成功|successful" "$log_file" >/dev/null 2>&1; then
                 echo "安装成功。"
                 execute_root_scripts
                 success_flag=1
