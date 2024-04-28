@@ -1,7 +1,7 @@
 # oracle11gr2_install
 ## centos7.9安装oracle11g一键脚本说明
 ### 1. 执行脚本的前提条件
-1.1 操作系统：centos7.9（中文），其它系统尚未测试。
+1.1 操作系统：centos7.9
 
 1.2 系统可以连接互联网。可能需要更换软件源，并添加epel源。这是一个更换阿里源的脚本https://github.com/Yogoshiteyo/aliyun.repo
 
