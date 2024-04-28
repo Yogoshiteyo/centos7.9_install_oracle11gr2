@@ -28,19 +28,16 @@
 
 2.10 修改系统资源限制
 
-2.11 修改dbinstall.rsp（安装响应）文件内容，其中重要的参数有：
+2.11 修改dbinstall.rsp（安装响应）文件内容，可在modify_response_file_content1函数按需修改。中其中重要的参数有：
 
     ORACLE_HOSTNAME=oracledb
-    INVENTORY_LOCATION=$ORACLE_BASE/oraInventory
     SELECTED_LANGUAGES=en,zh_CN
-    ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1
-    ORACLE_BASE=
     oracle.install.db.InstallEdition=EE
     oracle.install.db.config.starterdb.globalDBName=ora11g
     oracle.install.db.config.starterdb.SID=ora11g
     oracle.install.db.config.starterdb.characterSet=AL32UTF8
     DECLINE_SECURITY_UPDATES=true
-2.12 修改dbca.rsp（建库响应）文件，sys用户密码可在此处修改，其中重要的参数有：
+2.12 修改dbca.rsp（建库响应）文件，可在modify_dbca_response_file函数中按需修改。其中重要的参数有：
 
     GDBNAME = "orcl"
     SID = "orcl"
