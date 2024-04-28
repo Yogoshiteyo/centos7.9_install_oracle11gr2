@@ -22,8 +22,29 @@
 
 2.7 安装依赖包
 
-2.8 查找安装包路径，并解压安装包到/software/database
+    开始安装依赖包...
+    已加载插件：fastestmirror
+    Loading mirror speeds from cached hostfile
+     * base: mirrors.aliyun.com
+     * extras: mirrors.aliyun.com
+     * updates: mirrors.aliyun.com
+    base                                                                                                              | 3.6 kB  00:00:00
+    epel                                                                                                              | 4.7 kB  00:00:00
+    extras                                                                                                            | 2.9 kB  00:00:00
+    updates                                                                                                           | 2.9 kB  00:00:00
+    (1/2): epel/x86_64/updateinfo                                                                                     | 1.0 MB  00:00:00
+    (2/2): epel/x86_64/primary_db                                                                                     | 7.0 MB  00:00:01
+    软件包 unzip-6.0-24.el7_9.x86_64 已安装并且是最新版本
+    软件包 net-tools-2.0-0.25.20131004git.el7.x86_64 已安装并且是最新版本
 
+
+2.8 查找安装包路径，并解压安装包
+
+    正在解压安装包: /opt/linux.x64_11gR2_database_2of7.zip  解压完成.
+    正在解压安装包: /opt/linux.x64_11gR2_database_1of7.zip  解压完成.
+    正在移动数据库目录内容: /tmp/database/* 到 /software/database
+    正在删除原始数据库目录: /tmp/database
+    安装包已解压到 /software/database。
 2.9 修改内核参数
 
 2.10 修改系统资源限制
