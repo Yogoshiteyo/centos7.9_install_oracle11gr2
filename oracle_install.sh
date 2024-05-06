@@ -177,9 +177,10 @@ extract_installation_packages() {
     install_packages=($(find / -name "linux.x64_11gR2_database_*"))
     if [ ${#install_packages[@]} -eq 0 ]; then
         echo "错误：安装包不存在，请下载安装包。
-        下载地址（直接复制链接后打开迅雷下载，共两个文件）
-        http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_1of2.zip
-        http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_2of2.zip" >&2
+        # 下载地址（直接复制链接后打开迅雷下载，共两个文件）
+        # http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_1of2.zip
+        # http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_2of2.zip" 
+        >&2
         exit 1
     fi
 
