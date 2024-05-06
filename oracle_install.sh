@@ -4,6 +4,12 @@
 get_max_partition() {
   # 查找最大的分区并返回其路径
   max_partition=$(df --output=source,size | awk 'NR>1 {print $2,$1}' | sort -nr | head -n 1 | cut -d' ' -f2)
+  
+  # 如果是逻辑卷，则获取其挂载点
+  if [[ $max_partition == /dev/mapper/* ]]; then
+    max_partition=$(df --output=source,target | awk -v partition="$max_partition" '$1 == partition {print $2}')
+  fi
+
   echo "$max_partition"
 }
 
