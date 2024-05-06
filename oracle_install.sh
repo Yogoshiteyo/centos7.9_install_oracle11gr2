@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# 函数：获取最大分区
-get_max_partition() {
- # 则获取其挂载点
+ # 获取最大挂载点
+max_partition=$(df --output=target,size | awk 'NR>1 {print $2,$1}' | sort -nr | head -n 1 | cut -d' ' -f2)
 
-  max_partition=$(df --output=source,target | awk -v partition="$max_partition" '$1 == partition {print $2}')
-
-
-  echo "$max_partition"
-}
 
 # 函数：确认安装路径
 confirm_installation_path() {
@@ -57,7 +51,7 @@ confirm_operation() {
 # 参数：
 #   $1: 是否选择了默认路径（true/false）
 create_installation_directory_and_set_permissions() {
-    local install_dir="/data/app/oracle"
+    local install_dir="$max_partitiondata/data/app/oracle"
 
     # 创建目录
 
@@ -495,7 +489,7 @@ modify_oracle_user_profile() {
     # 决定$ORACLE_BASE的值
     local ORACLE_BASE
     if [ "$use_default" = true ]; then
-        ORACLE_BASE="/data/app/oracle"
+        ORACLE_BASE="$max_partitiondata/data/app/oracle"
     else
         ORACLE_BASE="$INSTALL_DIR"
     fi
