@@ -19,7 +19,7 @@ confirm_installation_path() {
     else
         read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $max_partition 中)? (y/n): " use_default
         if [[ $use_default =~ ^[Yy]$ ]]; then
-            INSTALL_DIR="$MAX_PARTITION_DIR/$DEFAULT_INSTALL_DIR"
+            INSTALL_DIR="$DEFAULT_INSTALL_DIR"
             echo "$INSTALL_DIR" > "$INSTALL_PATH_FILE"
             return 0
         else
