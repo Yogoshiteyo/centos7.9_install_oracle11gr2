@@ -2,20 +2,17 @@
 
 # 函数：获取最大分区
 get_max_partition() {
-  # 查找最大的分区并返回其路径
-  max_partition=$(df --output=source,size | awk 'NR>1 {print $2,$1}' | sort -nr | head -n 1 | cut -d' ' -f2)
-  
-  # 如果是逻辑卷，则获取其挂载点
-  if [[ $max_partition == /dev/mapper/* ]]; then
-    max_partition=$(df --output=source,target | awk -v partition="$max_partition" '$1 == partition {print $2}')
-  fi
+ # 则获取其挂载点
+
+  max_partition=$(df --output=source,target | awk -v partition="$max_partition" '$1 == partition {print $2}')
+
 
   echo "$max_partition"
 }
 
 # 函数：确认安装路径
 confirm_installation_path() {
-  local DEFAULT_INSTALL_DIR="data/app/oracle"
+  local DEFAULT_INSTALL_DIR="$max_partitiondata/data/app/oracle"
   local MAX_PARTITION_DIR="$1"
 
   read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $MAX_PARTITION_DIR 中)? (y/n): " use_default
@@ -395,7 +392,7 @@ modify_response_file_content1() {
 
 modify_response_file_content2() {
     local rsp_file="/software/database/response/db_install.rsp"
-    local default_install_dir="data/app/oracle"
+    local default_install_dir="$max_partitiondata/data/app/oracle"
 
     if [ ! -f "$rsp_file" ]; then
         echo "错误：安装响应文件 $rsp_file 不存在。" >&2
