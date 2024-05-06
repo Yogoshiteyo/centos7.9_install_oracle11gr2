@@ -1,25 +1,37 @@
 #!/bin/bash
 
- # 获取最大挂载点
+# 获取最大分区
 max_partition=$(df --output=target,size | awk 'NR>1 {print $2,$1}' | sort -nr | head -n 1 | cut -d' ' -f2)
 
+# 默认安装路径
+DEFAULT_INSTALL_DIR="$max_partition/data/app/oracle"
 
-# 函数：确认安装路径
+# 确认安装路径
 confirm_installation_path() {
-  local DEFAULT_INSTALL_DIR="$max_partition/data/app/oracle"
-  local MAX_PARTITION_DIR="$1"
+    local MAX_PARTITION_DIR="$max_partition"
+    local INSTALL_PATH_FILE="/tmp/install_path.txt"
 
-  read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $max_partition 中)? (y/n): " use_default
-  if [[ $use_default =~ ^[Yy]$ ]]; then
-    INSTALL_DIR="$MAX_PARTITION_DIR/$DEFAULT_INSTALL_DIR"
-    return 0
-  else
-    # 用户指定安装路径
-    read -p "请输入自定义安装路径: " USER_SPECIFIED_DIR
-    INSTALL_DIR="$USER_SPECIFIED_DIR"
-    return 1
-  fi
+    if [[ -f "$INSTALL_PATH_FILE" ]]; then
+        # 如果文件存在，读取安装路径
+        INSTALL_DIR=$(<"$INSTALL_PATH_FILE")
+        echo "检测到上次保存的安装路径：$INSTALL_DIR"
+        return 0
+    else
+        read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $max_partition 中)? (y/n): " use_default
+        if [[ $use_default =~ ^[Yy]$ ]]; then
+            INSTALL_DIR="$MAX_PARTITION_DIR/$DEFAULT_INSTALL_DIR"
+            echo "$INSTALL_DIR" > "$INSTALL_PATH_FILE"
+            return 0
+        else
+            # 用户指定安装路径
+            read -p "请输入自定义安装路径: " USER_SPECIFIED_DIR
+            INSTALL_DIR="$USER_SPECIFIED_DIR"
+            echo "$INSTALL_DIR" > "$INSTALL_PATH_FILE"
+            return 1
+        fi
+    fi
 }
+
 
 create_user_and_groups() {
     # 建立组
