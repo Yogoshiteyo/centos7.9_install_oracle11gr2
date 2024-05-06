@@ -6,7 +6,7 @@ max_partition=$(df --output=target,size | awk 'NR>1 {print $2,$1}' | sort -nr | 
 
 # 函数：确认安装路径
 confirm_installation_path() {
-  local DEFAULT_INSTALL_DIR="$max_partitiondata/data/app/oracle"
+  local DEFAULT_INSTALL_DIR="$max_partition/data/app/oracle"
   local MAX_PARTITION_DIR="$1"
 
   read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $MAX_PARTITION_DIR 中)? (y/n): " use_default
@@ -51,7 +51,7 @@ confirm_operation() {
 # 参数：
 #   $1: 是否选择了默认路径（true/false）
 create_installation_directory_and_set_permissions() {
-    local install_dir="$max_partitiondata/data/app/oracle"
+    local install_dir="$max_partition/data/app/oracle"
 
     # 创建目录
 
@@ -386,7 +386,7 @@ modify_response_file_content1() {
 
 modify_response_file_content2() {
     local rsp_file="/software/database/response/db_install.rsp"
-    local default_install_dir="$max_partitiondata/data/app/oracle"
+    local default_install_dir="$max_partition/data/app/oracle"
 
     if [ ! -f "$rsp_file" ]; then
         echo "错误：安装响应文件 $rsp_file 不存在。" >&2
@@ -489,7 +489,7 @@ modify_oracle_user_profile() {
     # 决定$ORACLE_BASE的值
     local ORACLE_BASE
     if [ "$use_default" = true ]; then
-        ORACLE_BASE="$max_partitiondata/data/app/oracle"
+        ORACLE_BASE="$max_partition/data/app/oracle"
     else
         ORACLE_BASE="$INSTALL_DIR"
     fi
