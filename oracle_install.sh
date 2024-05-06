@@ -9,7 +9,7 @@ confirm_installation_path() {
   local DEFAULT_INSTALL_DIR="$max_partition/data/app/oracle"
   local MAX_PARTITION_DIR="$1"
 
-  read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $MAX_PARTITION_DIR 中)? (y/n): " use_default
+  read -p "是否使用默认安装路径 ($DEFAULT_INSTALL_DIR 在最大分区 $max_partition 中)? (y/n): " use_default
   if [[ $use_default =~ ^[Yy]$ ]]; then
     INSTALL_DIR="$MAX_PARTITION_DIR/$DEFAULT_INSTALL_DIR"
     return 0
