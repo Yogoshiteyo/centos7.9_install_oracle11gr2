@@ -693,6 +693,7 @@ ask_create_instance() {
     else
         echo "不创建实例。"
     fi
+    add_comment
 }
 
 
@@ -718,7 +719,7 @@ main() {
     check_installation_logs
     install_netca
     ask_create_instance
-    add_comment
+    auto_startup_oracle
     echo_server_info
     echo "脚本执行完成。"
 }
