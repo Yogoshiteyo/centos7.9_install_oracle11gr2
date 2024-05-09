@@ -622,6 +622,67 @@ echo_db_info() {
     add_comment
 }
 
+# 实现Oracle开机自启设置
+setup_oracle_autostart() {
+    # 检查当前用户是否为root
+    if [ "$(id -u)" != "0" ]; then
+        echo "Error: This script must be run as root or with sudo." >&2
+        exit 1
+    fi
+
+    # 获取oracle用户的环境变量中的路径
+    ORACLE_HOME=$(su - oracle -c 'echo $ORACLE_HOME')
+    ORACLE_BASE=$(su - oracle -c 'echo $ORACLE_BASE')
+
+    # 判断ORACLE_HOME是否为空
+    if [ -z "$ORACLE_HOME" ]; then
+        echo "Error: ORACLE_HOME is not set for the oracle user." >&2
+        exit 1
+    fi
+
+    # 修改Oracle脚本dbstart和dbshut中的ORACLE_HOME_LISTNER为ORACLE_HOME
+    dbstart_script="$ORACLE_HOME/bin/dbstart"
+    dbshut_script="$ORACLE_HOME/bin/dbshut"
+    sed -i "s|ORACLE_HOME_LISTNER=\$1|ORACLE_HOME_LISTNER=\$ORACLE_HOME|" "$dbstart_script"
+    sed -i "s|ORACLE_HOME_LISTNER=\$1|ORACLE_HOME_LISTNER=\$ORACLE_HOME|" "$dbshut_script"
+
+    # 修改/etc/oratab文件，将orcl实例的启动标志修改为Y
+    rm -rf /etc/oratab
+    touch /etc/oratab
+    echo "orcl:$ORACLE_HOME:Y" >> "/etc/oratab"
+    su - oracle -c 'lsnrctl start'
+}
+
+create_startup_sql(){
+    cat  << EOF > /home/oracle/startup.sql
+    conn / as sysdba
+    startup
+EOF
+
+}
+
+create_oracle_service(){
+    cat << EOF > /etc/systemd/system/oracle.service
+    [Unit]
+    Description=Oracle Startup Service
+    After=network.target
+
+    [Service]
+    Type=oneshot
+    ExecStart=/bin/bash -lc 'su - oracle -c "lsnrctl start && sleep 10 && sqlplus /nolog @/home/oracle/startup.sql"'
+
+    [Install]
+    WantedBy=multi-user.target
+EOF
+}
+
+auto_startup_oracle(){
+    create_startup_sql
+    create_oracle_service
+    systemctl enable oracle
+    echo "已添加开机自启"
+    add_comment
+}
 
 
 ask_create_instance() {
@@ -633,6 +694,9 @@ ask_create_instance() {
         echo "不创建实例。"
     fi
 }
+
+
+
 
 # 主函数
 main() {
