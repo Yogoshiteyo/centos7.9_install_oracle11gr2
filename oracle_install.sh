@@ -189,6 +189,19 @@ extract_installation_packages() {
     install_packages=($(find / -name "linux.x64_11gR2_database_*" -o -name "p13390677_112040_Linux-x86-64*"))
     if [ ${#install_packages[@]} -eq 0 ]; then
         echo "错误：安装包不存在，请下载安装包。
+         
+        p13390677_112040_Linux-x86-64_1of7.zip 1.3 GB (1395582860 字节)
+        MD5 1616F61789891A56EAFD40DE79F58F28
+        SHA-1 983461D6442B0833630475EC4885278588585651
+        
+        p13390677_112040_Linux-x86-64_2of7.zip 1.1 GB (1151304589 字节)
+        MD5 67BA1E68A4F581B305885114768443D3
+        SHA-1 2E628D8CAC5D1C6FFF15E728B1F227747BF2DED8
+        
+        p13390677_112040_Linux-x86-64_3of7.zip 1.1 GB (1205251894 字节)
+        MD5 04CEF37991DB18F8190F7D4A19B26912
+        SHA-1 8C0CD2D7BB2DD73E965A90CD053828D7A52AE7E7
+        
         #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_1of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_1of7.zip
         #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_2of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_2of7.zip
         >&2
