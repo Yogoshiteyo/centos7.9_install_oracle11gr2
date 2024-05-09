@@ -189,12 +189,8 @@ extract_installation_packages() {
     install_packages=($(find / -name "linux.x64_11gR2_database_*" -o -name "p13390677_112040_Linux-x86-64*"))
     if [ ${#install_packages[@]} -eq 0 ]; then
         echo "错误：安装包不存在，请下载安装包。
-        https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_1of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_1of7.zip
-        https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_2of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_2of7.zip
-        有权限下载软件包的账号：https://bugmenot.com/view/oracle.com
-        # 下载地址（直接复制链接后打开迅雷下载，共两个文件）
-        # http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_1of2.zip
-        # http://download.oracle.com/otn/linux/oracle11g/R2/linux.x64_11gR2_database_2of2.zip" 
+        #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_1of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_1of7.zip
+        #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_2of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_2of7.zip
         >&2
         exit 1
     fi
