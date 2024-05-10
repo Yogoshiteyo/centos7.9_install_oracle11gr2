@@ -692,7 +692,7 @@ create_zhs16gbk_sql(){
     CONNECT sys/oracle AS SYSDBA;
 
     -- 查看当前字符集和语言
-    SELECT * FROM V$NLS_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET';
+    SELECT * FROM NLS_DATABASE_PARAMETERS;
     SELECT USERENV('language') FROM DUAL;
 
     -- 关闭数据库
@@ -720,7 +720,7 @@ create_zhs16gbk_sql(){
     STARTUP;
 
     -- 再次查看当前字符集和语言
-    SELECT * FROM V$NLS_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET';
+    SELECT * FROM NLS_DATABASE_PARAMETERS;
     SELECT USERENV('language') FROM DUAL;
     EXIT;
 
