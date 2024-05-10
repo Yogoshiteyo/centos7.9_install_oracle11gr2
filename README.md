@@ -165,8 +165,60 @@
     有关详细信息, 请参阅日志文件 "/data/app/oracle/cfgtoollogs/dbca/orcl11g/orcl11g.log"。
     静默建库已完成。
 
+2.19 设置字符集为ZHS16GBK
+```
+    正在修改字符集......
+    
+    SQL*Plus: Release 11.2.0.4.0 Production on Fri May 10 16:12:28 2024
+    
+    Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+    
+    Connected.
+    Database closed.
+    Database dismounted.
+    ORACLE instance shut down.
+    ORACLE instance started.
+    
+    Total System Global Area 2455228416 bytes
+    Fixed Size                  2255712 bytes
+    Variable Size             620758176 bytes
+    Database Buffers         1811939328 bytes
+    Redo Buffers               20275200 bytes
+    Database mounted.
+    
+    System altered.
+    
+    
+    System altered.
+    
+    
+    System altered.
+    
+    
+    Database altered.
+    
+    
+    Database altered.
+    
+    Database closed.
+    Database dismounted.
+    ORACLE instance shut down.
+    ORACLE instance started.
+    
+    Total System Global Area 2455228416 bytes
+    Fixed Size                  2255712 bytes
+    Variable Size             620758176 bytes
+    Database Buffers         1811939328 bytes
+    Redo Buffers               20275200 bytes
+    Database mounted.
+    Database opened.
+    Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+    With the Partitioning, OLAP, Data Mining and Real Application Testing options
 
-2.18 输出安装信息
+```
+
+
+2.19 输出安装信息
 
     
     数据库信息
