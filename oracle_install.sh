@@ -765,6 +765,7 @@ main() {
     install_netca
     ask_create_instance
     auto_startup_oracle
+    create_zhs16gbk_sql
     set_zhs16gbk
     echo_server_info
     echo_db_info
