@@ -721,6 +721,8 @@ create_zhs16gbk_sql(){
     -- 再次查看当前字符集和语言
     SELECT * FROM V$NLS_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET';
     SELECT USERENV('language') FROM DUAL;
+    EXIT;
+
 EOF
 }
 
