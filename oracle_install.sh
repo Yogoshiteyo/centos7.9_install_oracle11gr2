@@ -687,6 +687,7 @@ auto_startup_oracle(){
 # 创建用于更改字符集的sql脚本
 create_zhs16gbk_sql(){
     echo "正在修改字符集......"
+    add_comment
     cat << EOF > /home/oracle/zhs16gbk.sql
     -- 登录 DBA 用户
     CONNECT sys/oracle AS SYSDBA;
@@ -726,11 +727,13 @@ create_zhs16gbk_sql(){
 
 EOF
 sleep 3
+add_comment
 }
 
 # 设置字符集为zhs16gbk
 set_zhs16gbk(){
     su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
+    add_comment
 }
 
 
