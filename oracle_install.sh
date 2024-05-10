@@ -618,7 +618,7 @@ echo_db_info() {
     echo "PORT:1521"
     echo "sys用户密码：oracle"
     echo "system用户密码：oracle"
-    echo "字符集：AL32UTF8"
+    echo "字符集：ZHS16GBK"
     add_comment
 }
 
@@ -689,13 +689,56 @@ ask_create_instance() {
     read -p "是否需要创建实例？(y/n): " create_instance
     if [[ $create_instance =~ ^[Yy]$ ]]; then
         install_dbca
-        echo_db_info
     else
         echo "不创建实例。"
     fi
     add_comment
 }
 
+# 创建用于更改字符集的sql脚本
+create_zhs16gbk_sql(){
+    cat << EOF > /home/oracle/zhs16gbk.sql
+    -- 登录 DBA 用户
+    CONNECT sys/oracle AS SYSDBA;
+
+    -- 查看当前字符集和语言
+    SELECT * FROM V$NLS_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET';
+    SELECT USERENV('language') FROM DUAL;
+
+    -- 关闭数据库
+    SHUTDOWN IMMEDIATE;
+
+    -- 以 mount 模式打开数据库
+    STARTUP MOUNT;
+
+    -- 设置会话
+    ALTER SYSTEM ENABLE RESTRICTED SESSION;
+    ALTER SYSTEM SET JOB_QUEUE_PROCESSES=0;
+    ALTER SYSTEM SET AQ_TM_PROCESSES=0;
+
+    -- 重新打开数据库并修改字符集
+    ALTER DATABASE OPEN;
+    ---ALTER DATABASE CHARACTER SET ZHS16GBK;
+
+    -- 如果遇到 ORA-12712 错误，使用 INTERNAL_USE 选项
+    ALTER DATABASE CHARACTER SET INTERNAL_USE ZHS16GBK;
+
+    -- 关闭数据库
+    SHUTDOWN IMMEDIATE;
+
+    -- 重新启动数据库
+    STARTUP;
+
+    -- 再次查看当前字符集和语言
+    SELECT * FROM V$NLS_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET';
+    SELECT USERENV('language') FROM DUAL;
+EOF
+}
+
+# 设置字符集为zhs16gbk
+set_zhs16gbk(){
+    su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
+}
 
 
 
@@ -720,7 +763,9 @@ main() {
     install_netca
     ask_create_instance
     auto_startup_oracle
+    set_zhs16gbk
     echo_server_info
+    echo_db_info
     echo "脚本执行完成。"
 }
 
