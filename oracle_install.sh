@@ -684,17 +684,6 @@ auto_startup_oracle(){
     add_comment
 }
 
-
-ask_create_instance() {
-    read -p "是否需要创建实例？(y/n): " create_instance
-    if [[ $create_instance =~ ^[Yy]$ ]]; then
-        install_dbca
-    else
-        echo "不创建实例。"
-    fi
-    add_comment
-}
-
 # 创建用于更改字符集的sql脚本
 create_zhs16gbk_sql(){
     cat << EOF > /home/oracle/zhs16gbk.sql
@@ -739,6 +728,19 @@ EOF
 set_zhs16gbk(){
     su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
 }
+
+
+
+ask_create_instance() {
+    read -p "是否需要创建实例？(y/n): " create_instance
+    if [[ $create_instance =~ ^[Yy]$ ]]; then
+        install_dbca
+    else
+        echo "不创建实例。"
+    fi
+    add_comment
+}
+
 
 
 
