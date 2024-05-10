@@ -573,7 +573,7 @@ EOF
 
 modify_dbca_response_file() {
     local dbca_file="/software/database/response/dbca.rsp"
-    local keyword1='GDBNAME = "orcl"'
+    local keyword1='GDBNAME = "orcl11g.us.oracle.com"'
     local replace_content1='GDBNAME = "orcl"'
     local keyword2='SID = "orcl11g"'
     local replace_content2='SID = "orcl"'
