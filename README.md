@@ -165,7 +165,7 @@
     有关详细信息, 请参阅日志文件 "/data/app/oracle/cfgtoollogs/dbca/orcl11g/orcl11g.log"。
     静默建库已完成。
 
-2.19 设置字符集为ZHS16GBK
+2.19 设置字符集为ZHS16GBK（如使用默认字符集则将主函数中的set_zhs16gbk注释掉）
 ```
     正在修改字符集......
     
