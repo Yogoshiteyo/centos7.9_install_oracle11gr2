@@ -1,5 +1,5 @@
 # Oracle 11.2.0.4 install
-## centos7.9安装Oracle 11.2.0.4一键脚本说明
+## centos7.9一键安装Oracle11gr2 11.2.0.4
 ### 1. 执行脚本的前提条件
 1.1 操作系统：centos7.9
 
