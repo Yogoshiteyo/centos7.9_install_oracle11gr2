@@ -229,7 +229,7 @@ With the Partitioning, OLAP, Data Mining and Real Application Testing options
     PORT:1521
     sys用户密码：oracle
     system用户密码：oracle
-    字符集：AL32UTF8
+    字符集：ZHS16GBK
     
     *******************************************************************
     
