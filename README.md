@@ -219,7 +219,10 @@ Database opened.
 Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
 With the Partitioning, OLAP, Data Mining and Real Application Testing options
 ```
-
+如失败，的重启后执行
+```bash
+su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
+```
 
 2.19 输出安装信息
 
