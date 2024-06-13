@@ -169,7 +169,7 @@ curl -O https://raw.githubusercontent.com/Yogoshiteyo/centos7.9_install_oracle11
     有关详细信息, 请参阅日志文件 "/data/app/oracle/cfgtoollogs/dbca/orcl11g/orcl11g.log"。
     静默建库已完成。
 
-2.19 设置字符集为ZHS16GBK（如使用默认字符集则将主函数中的set_zhs16gbk注释掉）
+2.19 设置字符集为ZHS16GBK
 ```
 正在修改字符集......
 
@@ -219,7 +219,7 @@ Database opened.
 Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
 With the Partitioning, OLAP, Data Mining and Real Application Testing options
 ```
-如失败，的重启后执行
+如失败，则重启后执行
 ```bash
 su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
 ```
