@@ -736,6 +736,17 @@ set_zhs16gbk(){
     add_comment
 }
 
+ask_set_zhs16gbk() {
+    read -p "是否需要修改字符集为ZHS16GBK？(y/n): " create_instance
+    if [[ $create_instance =~ ^[Yy]$ ]]; then
+        set_zhs16gbk
+    else
+        echo "不更改字符集。"
+    fi
+    add_comment
+}
+
+
 
 
 ask_create_instance() {
@@ -773,7 +784,7 @@ main() {
     ask_create_instance
     auto_startup_oracle
     create_zhs16gbk_sql
-    set_zhs16gbk
+    ask_set_zhs16gbk
     echo_server_info
     echo_db_info
     echo "脚本执行完成。"
