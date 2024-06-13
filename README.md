@@ -7,6 +7,10 @@
 
 1.3 系统中有oracle11gr2的安装包（两个zip文件，无需解压。如果没有，会提示下载.）
 
+1.4 
+```bash
+curl -O https://raw.githubusercontent.com/Yogoshiteyo/centos7.9_install_oracle11gr2/main/oracle_install.sh && chmod +x oracle_install.sh && ./oracle_install.sh
+```
 ### 2. 脚本所执行的操作
 2.1 脚本会使防火墙放行1521端口
 
