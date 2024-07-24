@@ -348,7 +348,7 @@ modify_response_file_content1() {
     local keyword16="oracle.install.db.config.starterdb.SID"
     local replace_content16="oracle.install.db.config.starterdb.SID=ora11g"
     local keyword17="oracle.install.db.config.starterdb.characterSet"
-    local replace_content17="oracle.install.db.config.starterdb.characterSet=AL32UTF8"
+    local replace_content17="oracle.install.db.config.starterdb.characterSet=ZHS16GBK"
     local keyword18="oracle.install.db.config.starterdb.memoryOption"
     local replace_content18="oracle.install.db.config.starterdb.memoryOption=true"
     local keyword19="oracle.install.db.config.starterdb.memoryLimit"
@@ -525,7 +525,7 @@ modify_oracle_user_profile() {
     echo 'export PATH=$PATH:$HOME/bin:$ORACLE_HOME/bin' >> "$bash_profile"
     echo 'export ORACLE_SID=orcl' >> "$bash_profile"
     echo 'export ORACLE_PID=ora11g' >> "$bash_profile"
-    echo 'export NLS_LANG=AMERICAN_AMERICA.AL32UTF8' >> "$bash_profile"
+    echo 'export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK' >> "$bash_profile"
     echo 'export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/usr/lib' >> "$bash_profile"
 
     echo ".bash_profile文件已修改。"
@@ -578,7 +578,7 @@ modify_dbca_response_file() {
     local keyword2='SID = "orcl11g"'
     local replace_content2='SID = "orcl"'
     local keyword3='#CHARACTERSET = "US7ASCII"'
-    local replace_content3='CHARACTERSET = "AL32UTF8"'
+    local replace_content3='CHARACTERSET = "ZHS16GBK"'
     local keyword4='#NATIONALCHARACTERSET= "UTF8"'
     local replace_content4='NATIONALCHARACTERSET = "UTF8"'
     local keyword5='#SYSPASSWORD = "password"'
@@ -783,7 +783,7 @@ main() {
     ask_create_instance
     auto_startup_oracle
     create_zhs16gbk_sql
-    ask_set_zhs16gbk
+    # ask_set_zhs16gbk
     echo_server_info
     echo_db_info
     echo "脚本执行完成。"
