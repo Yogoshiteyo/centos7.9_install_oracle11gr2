@@ -275,6 +275,7 @@ EOF
         echo "内核参数配置已修改。"
     fi
     sysctl -p
+    add_comment
 
     # 修改系统资源限制
     cp /etc/security/limits.conf /etc/security/limits.conf.bak
@@ -293,6 +294,7 @@ oracle  hard  nofile  65536
 EOF
         echo "系统资源限制已修改。"
     fi
+    add_comment
 
     # 修改用户验证选项
     cp /etc/pam.d/login /etc/pam.d/login.bak
@@ -309,6 +311,8 @@ EOF
             echo "未找到匹配的行，新参数已添加到 /etc/pam.d/login 文件末尾。"
         fi
     fi
+    add_comment
+
 }
 
 
@@ -348,7 +352,7 @@ modify_response_file_content1() {
     local keyword16="oracle.install.db.config.starterdb.SID"
     local replace_content16="oracle.install.db.config.starterdb.SID=ora11g"
     local keyword17="oracle.install.db.config.starterdb.characterSet"
-    local replace_content17="oracle.install.db.config.starterdb.characterSet=ZHS16GBK"
+    local replace_content17="oracle.install.db.config.starterdb.characterSet=$character_set"
     local keyword18="oracle.install.db.config.starterdb.memoryOption"
     local replace_content18="oracle.install.db.config.starterdb.memoryOption=true"
     local keyword19="oracle.install.db.config.starterdb.memoryLimit"
@@ -525,7 +529,7 @@ modify_oracle_user_profile() {
     echo 'export PATH=$PATH:$HOME/bin:$ORACLE_HOME/bin' >> "$bash_profile"
     echo 'export ORACLE_SID=orcl' >> "$bash_profile"
     echo 'export ORACLE_PID=ora11g' >> "$bash_profile"
-    echo 'export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK' >> "$bash_profile"
+    echo 'export NLS_LANG=AMERICAN_AMERICA.'"$character_set" >> "$bash_profile"
     echo 'export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/usr/lib' >> "$bash_profile"
 
     echo ".bash_profile文件已修改。"
@@ -578,7 +582,7 @@ modify_dbca_response_file() {
     local keyword2='SID = "orcl11g"'
     local replace_content2='SID = "orcl"'
     local keyword3='#CHARACTERSET = "US7ASCII"'
-    local replace_content3='CHARACTERSET = "ZHS16GBK"'
+    local replace_content3="CHARACTERSET = \"$character_set\""
     local keyword4='#NATIONALCHARACTERSET= "UTF8"'
     local replace_content4='NATIONALCHARACTERSET = "UTF8"'
     local keyword5='#SYSPASSWORD = "password"'
@@ -618,7 +622,7 @@ echo_db_info() {
     echo "PORT:1521"
     echo "sys用户密码：oracle"
     echo "system用户密码：oracle"
-    echo "字符集：ZHS16GBK"
+    echo "字符集：$character_set"
     add_comment
 }
 
@@ -684,69 +688,17 @@ auto_startup_oracle(){
     add_comment
 }
 
-# 创建用于更改字符集的sql脚本
-create_zhs16gbk_sql(){
-    add_comment
-    cat << EOF > /home/oracle/zhs16gbk.sql
-    -- 登录 DBA 用户
-    CONNECT sys/oracle AS SYSDBA;
-
-    -- 查看当前字符集和语言
-    ---SELECT * FROM NLS_DATABASE_PARAMETERS;
-    ---SELECT USERENV('language') FROM DUAL;
-
-    -- 关闭数据库
-    SHUTDOWN IMMEDIATE;
-
-    -- 以 mount 模式打开数据库
-    STARTUP MOUNT;
-
-    -- 设置会话
-    ALTER SYSTEM ENABLE RESTRICTED SESSION;
-    ALTER SYSTEM SET JOB_QUEUE_PROCESSES=0;
-    ALTER SYSTEM SET AQ_TM_PROCESSES=0;
-
-    -- 重新打开数据库并修改字符集
-    ALTER DATABASE OPEN;
-    ---ALTER DATABASE CHARACTER SET ZHS16GBK;
-
-    -- 如果遇到 ORA-12712 错误，使用 INTERNAL_USE 选项
-    ALTER DATABASE CHARACTER SET INTERNAL_USE ZHS16GBK;
-
-    -- 关闭数据库
-    SHUTDOWN IMMEDIATE;
-
-    -- 重新启动数据库
-    STARTUP;
-
-    -- 再次查看当前字符集和语言
-    ---SELECT * FROM NLS_DATABASE_PARAMETERS;
-    ---SELECT USERENV('language') FROM DUAL;
-    EXIT;
-
-EOF
-sleep 3
-add_comment
+get_character_set_configuration() {
+    echo "请选择字符集："
+    echo "1: AL32UTF8"
+    echo "2: ZHS16GBK"
+    read -p "请输入选项（1 或 2）: " choice
+    case $choice in
+        1) character_set="AL32UTF8";;
+        2) character_set="ZHS16GBK";;
+        *) echo "无效的选项，请重新选择。"; get_character_set_configuration;;
+    esac
 }
-
-# 设置字符集为zhs16gbk
-set_zhs16gbk(){
-    su - oracle -c "sqlplus /nolog @/home/oracle/zhs16gbk.sql"
-    add_comment
-}
-
-ask_set_zhs16gbk() {
-    read -p "是否需要修改字符集为ZHS16GBK？(y/n): " create_instance
-    if [[ $create_instance =~ ^[Yy]$ ]]; then
-        set_zhs16gbk
-    else
-        echo "不更改字符集。"
-    fi
-    add_comment
-}
-
-
-
 
 ask_create_instance() {
     read -p "是否需要创建实例？(y/n): " create_instance
@@ -764,28 +716,49 @@ ask_create_instance() {
 # 主函数
 main() {
     setup_selinux
+    # 设置selinux
     setup_hostname
+    # 设置主机名
+    get_character_set_configuration
+    # 获取最大分区
     create_user_and_groups
+    # 创建用户和组
     confirm_installation_path
+    # 确认安装路径
     create_installation_directory_and_set_permissions
+    # 创建安装文件夹并设置权限
     update_hosts_file
+    # 修改hosts文件
     restart_network_service
+    # 重启网络服务
     install_dependencies
+    # 安装依赖包
     extract_installation_packages
+    # 解压安装包
     setup_system_parameters
+    # 设置系统参数
     modify_response_file_content1
+    # 修改安装响应文件
     modify_response_file_content2
+    # 修改安装响应文件
     modify_dbca_response_file
+    # 修改建库响应文件
     modify_oracle_user_profile
+    # 修改oracle用户环境变量
     install_oracle_database
+    # 开始安装oracle数据库软件
     check_installation_logs
+    # 检查log文件，判断是否安装完成
     install_netca
+    # 配置监听
     ask_create_instance
+    # 询问是否创建实例
     auto_startup_oracle
-    create_zhs16gbk_sql
-    # ask_set_zhs16gbk
+    # 创建自动启动
     echo_server_info
+    # 输出服务器信息
     echo_db_info
+    # 输出数据库信息
     echo "脚本执行完成。"
 }
 
