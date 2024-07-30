@@ -71,6 +71,7 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 	*******************************************************************
 ### 2.5 重启后再次执行脚本
 再次执行脚本后
+
 1）防火墙会放行1521端口
 
 2）主机名设置为oracledb
