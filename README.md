@@ -57,6 +57,7 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 ```
 ### 2.4 关闭SELINUX
 1）脚本提示是否关闭SElinux，这里选择‘y’
+
 2）修改完Selinux配置后，提示重启计算机
 
 	[root@localhost ~]# curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracle_install.sh?t=1722301473 && chmod +x oracle_install.sh && ./oracle_install.sh
@@ -71,6 +72,7 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 ### 2.5 重启后再次执行脚本
 再次执行脚本后
 1）防火墙会放行1521端口
+
 2）主机名设置为oracledb
 
 ```bash
@@ -104,6 +106,7 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 
 ### 2.7 配置安装路径
 1）选择‘y’——脚本会获取到系统中空间最大的目录，并将oracle安装到最大目录下的/data/app/oracle目录中。这里获取到的最大分区就是根目录。如果最大分区是x，则会安装放到/x/data/app/oracle中。
+
 2）选择‘n’——可以自定义安装目录。注意自己指定目录时要确保目录有足够的空间。
 
 	*******************************************************************
@@ -156,7 +159,9 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 	*******************************************************************
 ### 2.10 解压安装包
 1）搜索名称为linux.x64_11gR2_database开头的文件
+
 2）将其解压到临时文件夹/tmp/database/中
+
 3）所有包解压完成后，将/tmp/database/移动到/software/database
 
 	*******************************************************************
@@ -170,10 +175,15 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 	*******************************************************************
 ### 2.11 配置相关参数
 1）修改内核参数			/etc/sysctl.conf
+
 2）修改系统资源限制			/etc/security/limits.conf
+
 3）修改用户限制文件			/etc/pam.d/login
+
 4）修改安装响应文件			/software/database/response/db_install.rsp
+
 5）修改建库响应文件			/software/database/response/dbca.rsp
+
 6）修改oracle用户环境变量	/home/oracle/.bash_profile
 
 	*******************************************************************
@@ -215,6 +225,7 @@ curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracl
 
 ### 2.12 开始安装
 1）出现“[WARNING] [INS-32055] 主产品清单位于 Oracle 基目录中。”警告，不影响安装。
+
 2）出现“grep: //data/app/oracle/oraInventory/logs/silentInstall*.log: 没有那个文件或目录”提示，系脚本正在检测oracle是否安装成功，是正常步骤，不要中断。时间长短因服务器性能而定，一般再5分钟左右。
 
 	开始安装 Oracle 数据库...
