@@ -196,11 +196,7 @@ extract_installation_packages() {
         
         p13390677_112040_Linux-x86-64_2of7.zip 1.1 GB (1151304589 字节)
         MD5 67BA1E68A4F581B305885114768443D3
-        SHA-1 2E628D8CAC5D1C6FFF15E728B1F227747BF2DED8
-        
-        p13390677_112040_Linux-x86-64_3of7.zip 1.1 GB (1205251894 字节)
-        MD5 04CEF37991DB18F8190F7D4A19B26912
-        SHA-1 8C0CD2D7BB2DD73E965A90CD053828D7A52AE7E7"
+        SHA-1 2E628D8CAC5D1C6FFF15E728B1F227747BF2DED8"
         
         #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_1of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_1of7.zip
         #https://updates.oracle.com/Orion/Services/download/p13390677_112040_Linux-x86-64_2of7.zip?aru=16716375&patch_file=p13390677_112040_Linux-x86-64_2of7.zip
