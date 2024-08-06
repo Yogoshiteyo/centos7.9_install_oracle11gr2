@@ -1,9 +1,13 @@
 # 在Centos7中使用一键脚本安装Oracle11g
 ## 1. 环境准备
 1.1 系统版本：Centos7.9（2009）
+
 1.2 Oracle版本：Oracle 11g 11.2.0.4
+
 1.3 网络需求：可以连接互联网
+
 1.4 一键安装：
+
 ```bash
 curl -o oracle_install.sh https://files-cdn.cnblogs.com/files/blogs/827077/oracle_install.sh?t=1722301473 && chmod +x oracle_install.sh && ./oracle_install.sh
 ```
